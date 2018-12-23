@@ -2,9 +2,18 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import {Navbar, NavbarBrand} from 'reactstrap';
 import Menu from './components/menuComponent';
+import { DISHES } from './shared/dishes';
 import './App.css';
 
 class App extends Component {
+  /*constructor for this components; brings in some data to construct component*/
+	constructor(props){
+		super(props);
+		this.state = {
+			dishes: DISHES
+		};
+  }
+  
   render() {
     return (
 		<div>
@@ -13,7 +22,9 @@ class App extends Component {
 					<NavbarBrand href="/">Ristorante Confusion</NavbarBrand>
 				</div>
 			</Navbar>
-			<Menu /> 
+
+			{/*State info that contains all the dishes is lifted to App.js and can be made this available to child components through props*/}
+			<Menu dishes={this.state.dishes}/> 
 			{/*Menu component will be rendered below Navbar in our App component. UI has been sub-divided into two parts - Navbar & Menu enclosed inside App which is then rendered inside index.js as a single component */}
 		</div>
 	  /*
