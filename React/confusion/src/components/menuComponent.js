@@ -12,8 +12,14 @@ class Menu extends Component{
 		this.state = {
 			selectedDish: null
 		};
+		
+		console.log("Menu Component Constructor is invoked");
 	}
 	
+	componentDidMount()
+	{
+		console.log("Menu Component componentDidMount is invoked");
+	}
 	onDishSelect(dish)
 	{
 		this.setState({selectedDish: dish});
@@ -64,6 +70,8 @@ class Menu extends Component{
 		//Arrow function is used to define what is going to be returned by this map operator; here a layout for a dish is returned
 		//Whenever a list of items is constructed in React, a key attribute is to be compulsory defined so as it to be recognized uniquely by React while rendering
 		
+		console.log("Menu Component Render is invoked");
+				
 		return (
 			<div className="container">
 				<div className="row">
