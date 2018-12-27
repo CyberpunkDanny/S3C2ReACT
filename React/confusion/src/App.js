@@ -15,6 +15,8 @@ class App extends Component {
   }
   
   render() {
+    console.log("DISHES");
+    console.log(this.state.dishes);  
     return (
 		<div>
 			<Navbar dark color="primary">
@@ -26,7 +28,8 @@ class App extends Component {
 			{/*State info that contains all the dishes is lifted to App.js and can be made this available to child components through props*/}
 			<Menu dishes={this.state.dishes}/> 
 			{/*Menu component will be rendered below Navbar in our App component. UI has been sub-divided into two parts - Navbar & Menu enclosed inside App which is then rendered inside index.js as a single component */}
-		</div>
+
+        </div>
 	  /*
 	  <div className="App">
         <header className="App-header">

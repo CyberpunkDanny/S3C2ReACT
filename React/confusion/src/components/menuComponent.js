@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-//import {Media} from 'reactstrap';
+import DishDetail from './dishDetailComponent';
 import {Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle} from 'reactstrap';
 
 class Menu extends Component{
@@ -71,15 +71,17 @@ class Menu extends Component{
 		//Whenever a list of items is constructed in React, a key attribute is to be compulsory defined so as it to be recognized uniquely by React while rendering
 		
 		console.log("Menu Component Render is invoked");
-				
+        console.log(this.state.selectedDish);
 		return (
 			<div className="container">
 				<div className="row">
 					{menu} {/*A JS Variable*/}
-				</div>
-				<div className="row">
+				
+             {/*<div className="row">
 					{this.renderDish(this.state.selectedDish)}
-				</div>
+				</div>*/}
+                <DishDetail selectedDish={this.state.selectedDish}/>
+                </div>
 			</div>
 		);
 	}
