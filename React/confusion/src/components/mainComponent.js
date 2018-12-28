@@ -4,6 +4,7 @@ import Menu from './menuComponent';
 import DishDetail from './dishDetailComponent';
 import { DISHES } from '../shared/dishes';
 
+//Always use UPPER_CASE for the first letter of the Component name
 class Main extends Component {
     /*constructor for this components; brings in some data to construct component*/
     /* A way of passing info to a component is through Props */
