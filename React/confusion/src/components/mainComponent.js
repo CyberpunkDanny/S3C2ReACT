@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import {Navbar, NavbarBrand} from 'reactstrap';
 import Menu from './menuComponent';
 import DishDetail from './dishDetailComponent';
+import Header from './headerComponent';
+import Footer from './footerComponent';
 import { DISHES } from '../shared/dishes';
 
 //Always use UPPER_CASE for the first letter of the Component name
@@ -33,12 +34,7 @@ class Main extends Component {
         console.log(this.state.dishes);  
         return (
             <div>
-                <Navbar dark color="primary">
-                    <div className="container">
-                        <NavbarBrand href="/">Ristorante Confusion</NavbarBrand>
-                    </div>
-                </Navbar>
-
+                <Header />
                 {/*State info that contains all the dishes is lifted to App.js and can be made this available to child components through props*/}
                 <Menu dishes={this.state.dishes} onClick={(dishId)=>this.onDishSelect(dishId)}/> 
                 {/* onClick is being passed to Menu and we are obtaining dishId into our dishId variable. Hence, we use (dishId)=>*/}
@@ -46,6 +42,7 @@ class Main extends Component {
 
                 <DishDetail selectedDish={this.state.dishes.filter((dish)=>dish.id === this.state.selectedDish)[0]} />
                 {/*Filter returns an array. To obtain first element, use [0]. => operator helps in matching the dish ids with that of selected dish */}
+                <Footer />
             </div>
 
         );
