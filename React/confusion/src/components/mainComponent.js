@@ -5,7 +5,8 @@ import DishDetail from './dishDetailComponent';
 import { DISHES } from '../shared/dishes';
 
 class Main extends Component {
-  /*constructor for this components; brings in some data to construct component*/
+    /*constructor for this components; brings in some data to construct component*/
+    /* A way of passing info to a component is through Props */
 	constructor(props){
 		super(props);
         console.log("Main Component Constructor is invoked");

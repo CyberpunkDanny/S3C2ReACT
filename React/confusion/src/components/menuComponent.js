@@ -14,7 +14,7 @@ class Menu extends Component{
 		console.log("Menu Component componentDidMount is invoked");
 	}
 		
-	renderDish(dish)
+	/*renderDish(dish)
 	{
 		if(dish != null)
 		{
@@ -35,7 +35,7 @@ class Menu extends Component{
 				<div></div>
 			);
 		}
-	}
+	}*//*This is moved to dishDetailComponent.js*/
 
 
 	//a class component should implement render() method which will return the corresponding view for this component
