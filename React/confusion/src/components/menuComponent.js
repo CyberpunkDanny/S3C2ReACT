@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import DishDetail from './dishDetailComponent';
 import {Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle} from 'reactstrap';
 
 class Menu extends Component{
@@ -7,22 +6,12 @@ class Menu extends Component{
 	/* A way of passing info to a component is through Props */
 	constructor(props){
 		super(props);
-		
-		/*state stores properties related to this component that we can make us of*/
-		this.state = {
-			selectedDish: null
-		};
-		
 		console.log("Menu Component Constructor is invoked");
 	}
 	
 	componentDidMount()
 	{
 		console.log("Menu Component componentDidMount is invoked");
-	}
-	onDishSelect(dish)
-	{
-		this.setState({selectedDish: dish});
 	}
 		
 	renderDish(dish)
@@ -58,7 +47,7 @@ class Menu extends Component{
 			return(
 				<div key={dish.id} className="col-12 col-md-5 m-1">
 					{/*view for each of the items*/}
-					<Card onClick={() => this.onDishSelect(dish)}>
+					<Card onClick={() => this.props.onClick(dish.id)}>
 						<CardImg width="100%" src={dish.image} alt={dish.name} />
 						<CardImgOverlay> 
 							<CardTitle>{dish.name}</CardTitle>
@@ -71,7 +60,6 @@ class Menu extends Component{
 		//Whenever a list of items is constructed in React, a key attribute is to be compulsory defined so as it to be recognized uniquely by React while rendering
 		
 		console.log("Menu Component Render is invoked");
-        console.log(this.state.selectedDish);
 		return (
 			<div className="container">
 				<div className="row">
@@ -80,7 +68,6 @@ class Menu extends Component{
              {/*<div className="row">
 					{this.renderDish(this.state.selectedDish)}
 				</div>*/}
-                <DishDetail selectedDish={this.state.selectedDish}/>
                 </div>
 			</div>
 		);
