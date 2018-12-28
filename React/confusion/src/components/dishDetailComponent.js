@@ -14,7 +14,12 @@ class DishDetail extends Component
 	{
 		console.log("DishDetail Component componentDidMount is invoked");
 	}
-
+    
+	componentDidUpdate()
+	{
+		console.log("DishDetail Component componentDidUpdate is invoked");
+	}
+    
     renderComments(commentArr)
     {
         console.log("renderComments() is invoked");
