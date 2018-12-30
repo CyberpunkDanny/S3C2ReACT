@@ -6,7 +6,7 @@ import {Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle} from 'reac
     {
         return(
             /*view for each of the items*/
-            <Card onClick={() => onClick(dish.id)}>
+            <Card> {/*onClick={() => onClick(dish.id)}> Disabled*/}
                 <CardImg width="100%" src={dish.image} alt={dish.name} />
                 <CardImgOverlay> 
                     <CardTitle>{dish.name}</CardTitle>
@@ -20,7 +20,7 @@ import {Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle} from 'reac
         const menu = props.dishes.map((dish)=>{
 			return(
 				<div key={dish.id} className="col-12 col-md-5 m-1">
-                    <RenderMenuItem dish={dish} onClick={props.onClick}/>
+                    <RenderMenuItem dish={dish} /> {/*onClick={props.onClick}/> Disabled*/}
 				</div>
 			);
 		}); //map operator is to iterate over array items
