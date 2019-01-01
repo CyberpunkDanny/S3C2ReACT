@@ -50,6 +50,15 @@ class Main extends Component {
                     leader={this.state.leaders.filter((leader)=>leader.featured === true)[0] } />
             );
         }
+    
+        const DishWithId = ({match})=>{
+            return(
+                <DishDetail dish ={this.state.dishes.filter((dish)=> dish.id === parseInt(match.params.dishId, 10))[0]} 
+                    comments = {this.state.comments.filter((comment)=> comment.dishId === parseInt(match.params.dishId, 10))} />
+                /* parseInt() is a JS function which converts string to a number using the BASE mentioned */
+            );
+        }
+        
         return (
             <div>
                 <Header />
@@ -59,7 +68,9 @@ class Main extends Component {
                     {/* But here we send HOME as a functional component casually */}
                     {/*To pass in props to a comp through specification of the router, it has to be passed as a function component */}
                     <Route exact path='/menu' component={()=><Menu dishes={this.state.dishes}  />} />
-                     <Route exact path='/contactus' component={Contact} />
+                    {/* Use of 'exact' is required above to prevent falling through to next one and getting matched */}
+                    <Route path='/menu/:dishId' component={DishWithId} /> {/* Route here will pass 3 props - Match, Location and History */}
+                    <Route exact path='/contactus' component={Contact} />
                     {/* Anything that doesn't match above two routes will be re-directed to Home */}
                     <Redirect to='/home' />
                 </Switch>

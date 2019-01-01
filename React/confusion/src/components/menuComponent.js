@@ -1,5 +1,7 @@
 import React from 'react';
 import {Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle} from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
     /*Turning Presentational Component into Functional Component*/
     function RenderMenuItem({dish, onClick}) /* 'props' can also be passed as arg but we are being specific here with {dish, onClick}*/
@@ -7,10 +9,12 @@ import {Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle} from 'reac
         return(
             /*view for each of the items*/
             <Card> {/*onClick={() => onClick(dish.id)}> Disabled*/}
+                <Link to={`/menu/${dish.id}`} > {/* Remember to use BACKQUOTES so that content inside is evaluated and then placed in URL*/}
                 <CardImg width="100%" src={dish.image} alt={dish.name} />
                 <CardImgOverlay> 
                     <CardTitle>{dish.name}</CardTitle>
                 </CardImgOverlay>
+                </Link>
             </Card>
         );
     }
@@ -30,8 +34,19 @@ import {Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle} from 'reac
         return (
 			<div className="container">
 				<div className="row">
+                    <Breadcrumb>
+                        <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
+                        <BreadcrumbItem active>Menu</BreadcrumbItem>
+                    </Breadcrumb>
+                    <div className="col-12">
+                        <h3>Menu</h3>
+                        <hr />
+                    </div>
+                </div>
+                <div className="row">
 					{menu} {/*A JS Variable*/}
                 </div>
+                <hr />
 			</div>
 		);
 

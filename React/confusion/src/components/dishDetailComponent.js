@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardTitle, CardBody, CardText, CardImg, CardImgOverlay } from 'reactstrap';
-
+import { Link } from 'react-router-dom';
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 /*Always use UPPER_CASE for the first letter of the user-defined Component*/
 function RenderComments({commentArr})
 {
@@ -29,7 +30,6 @@ function RenderComments({commentArr})
 function RenderDish({dishToBeDisplayed})
 {
     return(
-        <div className="row"> 
             <div className="col-12 col-md-5 m-1">
             <Card>
                 <CardImg top src={dishToBeDisplayed.image} alt={dishToBeDisplayed.name}/>
@@ -39,20 +39,31 @@ function RenderDish({dishToBeDisplayed})
                 </CardBody>
             </Card>
             </div>
-                <RenderComments commentArr={dishToBeDisplayed.comments}/>
-        </div>
-
-
     );
 }
     
 const DishDetail = (props)=>{
-    const dishToBeDisplayed = props.selectedDish;
+    const dishToBeDisplayed = props.dish;
+    const commentsToBeDisplayed = props.comments;
 		if(dishToBeDisplayed != null)
         {
             return(
                 <div className="container">
-                    <RenderDish dishToBeDisplayed ={dishToBeDisplayed}/>
+                    <div className="row">
+                        <Breadcrumb>
+                        <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
+                        <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
+                        <BreadcrumbItem active>{dishToBeDisplayed.name}</BreadcrumbItem>                    
+                        </Breadcrumb>
+                        <div className="col-12">
+                            <h3>{dishToBeDisplayed.name}</h3>
+                            <hr />
+                        </div>
+                    </div>
+                    <div className="row"> 
+                        <RenderDish dishToBeDisplayed ={dishToBeDisplayed}/>
+                        <RenderComments commentArr={commentsToBeDisplayed}/>
+                    </div>
                 </div>
             );            
         }
