@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import Home from './homeComponent';
-import Menu from './menuComponent';
-import DishDetail from './dishDetailComponent';
-import Contact from './contactComponent';
-import About from './aboutComponent';
-import Header from './headerComponent';
-import Footer from './footerComponent';
+import Home from './HomeComponent';
+import Menu from './MenuComponent';
+import DishDetail from './DishDetailComponent';
+import Contact from './ContactComponent';
+import About from './AboutComponent';
+import Header from './HeaderComponent';
+import Footer from './FooterComponent';
 import { DISHES } from '../shared/dishes';
 import { COMMENTS } from '../shared/comments';
 import { PROMOTIONS } from '../shared/promotions';
