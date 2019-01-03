@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Form, FormGroup, Label, Input, Col, Button } from 'reactstrap';
 import { FormFeedback } from 'reactstrap';
+
 /* function Contact(props) *///Needs to be defined as a Class Component to have a state defined in it. And every class component should have a render()
 class Contact extends Component
 {
@@ -147,16 +148,16 @@ class Contact extends Component
                     <div className="col-12 col-md-9">
                         <Form onSubmit={this.handleSubmit}>
                             <FormGroup row>
-                                {/* Use htmlfor so that JSX won't be confused it with JS for*/}
+                                {/* Use htmlFor so that JSX won't be confused it with JS for*/}
                                 {/* Remember to use same name in name="" as used in state */}                                
-                                <Label htmlfor="firstname" md={2}>First Name</Label> {/* md={2} means this label occupies 2 cols in screens >= md */}
+                                <Label htmlFor="firstname" md={2}>First Name</Label> {/* md={2} means this label occupies 2 cols in screens >= md */}
                                 <Col md={10}>
                                     <Input type="text" name="firstname" id="firstname" valid={errors.firstname === ''} invalid={errors.firstname !== ''} onChange={this.handleInputChange} onBlur={this.handleBlur('firstname')}  placeholder="First Name" value={this.state.firstname} />
                                     <FormFeedback>{errors.firstname}</FormFeedback>
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
-                                <Label htmlfor="lastname" md={2}>Last Name</Label>
+                                <Label htmlFor="lastname" md={2}>Last Name</Label>
                                 <Col md={10}>
                                     <Input type="text" name="lastname" id="lastname" valid={errors.lastname === ''} invalid={errors.lastname !== ''} onChange={this.handleInputChange} onBlur={this.handleBlur('lastname')} placeholder="Last Name" 
                                         value={this.state.lastname} />
@@ -164,7 +165,7 @@ class Contact extends Component
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
-                                <Label htmlfor="telnum" md={2}>Contact Tel.</Label>
+                                <Label htmlFor="telnum" md={2}>Contact Tel.</Label>
                                 <Col md={10}>
                                     <Input type="tel" name="telnum" id="telnum" valid={errors.telnum === ''} invalid={errors.telnum !== ''} onChange={this.handleInputChange} onBlur={this.handleBlur('telnum')} placeholder="Tel. Number" 
                                         value={this.state.telnum} />
@@ -172,7 +173,7 @@ class Contact extends Component
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
-                                <Label htmlfor="email" md={2}>Email</Label>
+                                <Label htmlFor="email" md={2}>Email</Label>
                                 <Col md={10}>
                                     <Input type="email" name="email" id="email" valid={errors.email === ''} invalid={errors.email !== ''} onChange={this.handleInputChange} onBlur={this.handleBlur('email')} placeholder="Email ID" 
                                         value={this.state.email} />
@@ -196,7 +197,7 @@ class Contact extends Component
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
-                                <Label htmlfor="message" md={2}>Your Feedback</Label>
+                                <Label htmlFor="message" md={2}>Your Feedback</Label>
                                 <Col md={10}>
                                     <Input type="textarea" rows="12" name="message" id="message" onChange={this.handleInputChange} value={this.state.message} />
                                 </Col>
