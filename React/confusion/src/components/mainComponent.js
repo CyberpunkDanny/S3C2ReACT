@@ -14,7 +14,7 @@ const mapStateToProps = state=>{
     /* return {}; indicates "return an object of the function's return type initialized with an empty list-initializer" */
     return{
         dishes: state.dishes,
-        comments: state.coments,
+        comments: state.comments,
         promotions: state.promotions,
         leaders: state.leaders
     }
