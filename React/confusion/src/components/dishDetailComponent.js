@@ -33,6 +33,7 @@ class CommentForm extends Component
     handleSubmitComment(values)
     {
         this.toggleCommentModal();
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
         alert("Your Comment: "+ JSON.stringify(values));
     }
 
@@ -94,7 +95,7 @@ class CommentForm extends Component
 }
 
 /*Always use UPPER_CASE for the first letter of the user-defined Component*/
-function RenderComments({commentArr})
+function RenderComments({commentArr, addComment, dishId})
 {
     const comments = commentArr.map((comment)=>{
         const positionOfT = (comment.date).indexOf("T");
@@ -114,7 +115,7 @@ function RenderComments({commentArr})
             <ul className="list-unstyled">
                 {comments}
             </ul>
-            <CommentForm />
+            <CommentForm dishId={dishId} addComment={addComment}/>
         </div>
     );
 }
@@ -137,6 +138,7 @@ function RenderDish({dishToBeDisplayed})
 const DishDetail = (props)=>{
     const dishToBeDisplayed = props.dish;
     const commentsToBeDisplayed = props.comments;
+    const commentToBeAdded = props.addComment;
 		if(dishToBeDisplayed != null)
         {
             return(
@@ -154,7 +156,8 @@ const DishDetail = (props)=>{
                     </div>
                     <div className="row"> 
                         <RenderDish dishToBeDisplayed ={dishToBeDisplayed}/>
-                        <RenderComments commentArr={commentsToBeDisplayed}/>
+                        <RenderComments commentArr={commentsToBeDisplayed} addComment={commentToBeAdded} dishId={dishToBeDisplayed.id}/>
+                        {/* dishId is being sent because the comments themselves do not know the ID of dish for which comments are being rendered*/}
                     </div>
                 </div>
             );            

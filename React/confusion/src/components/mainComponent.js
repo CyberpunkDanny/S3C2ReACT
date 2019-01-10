@@ -8,6 +8,8 @@ import Header from './headerComponent';
 import Footer from './footerComponent';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { addComment } from '../redux/ActionCreators'; /* ActionCreator function is needed to obtain an action JS object which we then can dispatch to the store calling storeDispatch() */
+
 
 /* Maps Redux store into props to make available to component */    
 const mapStateToProps = state=>{
@@ -19,6 +21,11 @@ const mapStateToProps = state=>{
         leaders: state.leaders
     }
 }
+
+/* If something needs to be dispatched, it should be mapped to dispatch() which is a store function */
+const mapDispatchToProps = (dispatch)=>({
+    addComment: (dishId, rating, author, comment)=>dispatch(addComment(dishId, rating, author, comment)) /* Dispatching action*/
+});
 
 class Main extends Component {
 	constructor(props){
@@ -42,7 +49,8 @@ class Main extends Component {
         const DishWithId = ({match})=>{
             return(
                 <DishDetail dish ={this.props.dishes.filter((dish)=> dish.id === parseInt(match.params.dishId, 10))[0]} 
-                    comments = {this.props.comments.filter((comment)=> comment.dishId === parseInt(match.params.dishId, 10))} />
+                    comments = {this.props.comments.filter((comment)=> comment.dishId === parseInt(match.params.dishId, 10))}
+                    addComment = {this.props.addComment}/>
                 /* parseInt() is a JS function which converts string to a number using the BASE mentioned */
             );
         }
@@ -73,4 +81,4 @@ class Main extends Component {
 }
 
 /* withRouter needs to be imported as it is required for configuring our React Component to connect to Redux */
-export default withRouter(connect(mapStateToProps)(Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
