@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Label, Col, Row, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import { LocalForm, Control, Errors } from 'react-redux-form';
+import { Loading } from './LoadingComponent';
 
 const required = (value)=> value && value.length;
 const minNameLength = (len)=> (value)=> (value) && (value.length>=len);
@@ -139,7 +140,25 @@ const DishDetail = (props)=>{
     const dishToBeDisplayed = props.dish;
     const commentsToBeDisplayed = props.comments;
     const commentToBeAdded = props.addComment;
-		if(dishToBeDisplayed != null)
+	if(props.isLoading){
+        return(
+            <div className="container">
+                <div className="row">
+                    <Loading />
+                </div>
+            </div>
+        );
+    }
+    else if(props.errMess){
+        return(
+            <div className="container">
+                <div className="row">
+                    <h4>{props.errMess}</h4>
+                </div>
+            </div>
+        );
+    }
+    else if(dishToBeDisplayed != null)
         {
             return(
                 <div className="container">

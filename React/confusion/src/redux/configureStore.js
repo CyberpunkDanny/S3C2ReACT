@@ -5,6 +5,9 @@ import { Dishes } from './dishes';
 import { Comments } from './comments';
 import { Promotions } from './promotions';
 import { Leaders } from './leaders';
+import { applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 
 /* To combine simpler reducer functions together, Redux provides a method called combineReducers*/
 export const ConfigureStore = ()=>{
@@ -14,7 +17,8 @@ export const ConfigureStore = ()=>{
             comments: Comments,
             promotions: Promotions,
             leaders: Leaders
-        })
+        }),
+        applyMiddleware(thunk, logger)
     );
     return store;
 }

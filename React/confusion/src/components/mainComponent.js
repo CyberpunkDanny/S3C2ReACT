@@ -8,7 +8,7 @@ import Header from './headerComponent';
 import Footer from './footerComponent';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addComment } from '../redux/ActionCreators'; /* ActionCreator function is needed to obtain an action JS object which we then can dispatch to the store calling storeDispatch() */
+import { addComment, fetchDishes } from '../redux/ActionCreators'; /* ActionCreator function is needed to obtain an action JS object which we then can dispatch to the store calling storeDispatch() */
 
 
 /* Maps Redux store into props to make available to component */    
@@ -24,7 +24,10 @@ const mapStateToProps = state=>{
 
 /* If something needs to be dispatched, it should be mapped to dispatch() which is a store function */
 const mapDispatchToProps = (dispatch)=>({
-    addComment: (dishId, rating, author, comment)=>dispatch(addComment(dishId, rating, author, comment)) /* Dispatching action*/
+    /* Dispatching action */
+    addComment: (dishId, rating, author, comment)=>dispatch(addComment(dishId, rating, author, comment)), 
+    fetchDishes: ()=>{dispatch(fetchDishes())}
+    
 });
 
 class Main extends Component {
@@ -35,12 +38,13 @@ class Main extends Component {
     componentDidMount()
     {
         console.log("Main Component componentDidMount is invoked");
+        this.props.fetchDishes();
     }
     
     render() { 
         const HomePage = ()=>{
             return(
-                <Home dish={this.props.dishes.filter((dish)=>dish.featured === true)[0]} 
+                <Home dish={this.props.dishes.dishes.filter((dish)=>dish.featured === true)[0]} dishesLoading={this.props.dishes.isLoading} dishesErrMess={this.props.dishes.errMess} 
                     promotion={this.props.promotions.filter((promo)=>promo.featured === true)[0] } 
                     leader={this.props.leaders.filter((leader)=>leader.featured === true)[0] } />
             );
@@ -48,9 +52,9 @@ class Main extends Component {
     
         const DishWithId = ({match})=>{
             return(
-                <DishDetail dish ={this.props.dishes.filter((dish)=> dish.id === parseInt(match.params.dishId, 10))[0]} 
+                <DishDetail dish ={this.props.dishes.dishes.filter((dish)=> dish.id === parseInt(match.params.dishId, 10))[0]} 
                     comments = {this.props.comments.filter((comment)=> comment.dishId === parseInt(match.params.dishId, 10))}
-                    addComment = {this.props.addComment}/>
+                    addComment = {this.props.addComment} isLoading={this.props.dishes.isLoading} errMess={this.props.dishes.errMess}/>
                 /* parseInt() is a JS function which converts string to a number using the BASE mentioned */
             );
         }
