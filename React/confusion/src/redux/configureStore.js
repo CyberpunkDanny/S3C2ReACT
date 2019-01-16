@@ -8,7 +8,8 @@ import { Leaders } from './leaders';
 import { applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
-
+import { createForms } from 'react-redux-form'; /* Enables us to add form state into our store */
+import { InitialFeedback } from './forms';
 /* To combine simpler reducer functions together, Redux provides a method called combineReducers*/
 export const ConfigureStore = ()=>{
     const store = createStore(
@@ -16,7 +17,10 @@ export const ConfigureStore = ()=>{
             dishes: Dishes,
             comments: Comments,
             promotions: Promotions,
-            leaders: Leaders
+            leaders: Leaders,
+            ...createForms({
+                feedback: InitialFeedback
+            })
         }),
         applyMiddleware(thunk, logger)
     );

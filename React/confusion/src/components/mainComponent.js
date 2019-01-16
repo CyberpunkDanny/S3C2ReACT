@@ -9,7 +9,7 @@ import Footer from './footerComponent';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addComment, fetchDishes } from '../redux/ActionCreators'; /* ActionCreator function is needed to obtain an action JS object which we then can dispatch to the store calling storeDispatch() */
-
+import { actions } from 'react-redux-form';
 
 /* Maps Redux store into props to make available to component */    
 const mapStateToProps = state=>{
@@ -26,7 +26,8 @@ const mapStateToProps = state=>{
 const mapDispatchToProps = (dispatch)=>({
     /* Dispatching action */
     addComment: (dishId, rating, author, comment)=>dispatch(addComment(dishId, rating, author, comment)), 
-    fetchDishes: ()=>{dispatch(fetchDishes())}
+    fetchDishes: ()=>{dispatch(fetchDishes())},
+    resetFeedbackForm: ()=>{dispatch(actions.reset('feedback'))} /* To Reset the form once it is submitted */
     
 });
 
@@ -72,7 +73,7 @@ class Main extends Component {
                     {/* Use of 'exact' is required above to prevent falling through to next one and getting matched */}
                     <Route path='/menu/:dishId' component={DishWithId} /> {/* Route here will pass 3 props - Match, Location and History */}
                     <Route path='/aboutus' component={()=><About leaders={this.props.leaders}/>} />
-                    <Route exact path='/contactus' component={Contact} />
+                    <Route exact path='/contactus' component={()=><Contact resetFeedbackForm={this.props.resetFeedbackForm}/>} />
                     {/* Anything that doesn't match above two routes will be re-directed to Home */}
                     <Redirect to='/home' />
                 </Switch>
