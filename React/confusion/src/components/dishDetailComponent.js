@@ -5,6 +5,7 @@ import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Label, Col, Row, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import { LocalForm, Control, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
 const required = (value)=> value && value.length;
 const minNameLength = (len)=> (value)=> (value) && (value.length>=len);
@@ -126,7 +127,7 @@ function RenderDish({dishToBeDisplayed})
     return(
             <div className="col-12 col-md-5 m-1">
             <Card>
-                <CardImg top src={dishToBeDisplayed.image} alt={dishToBeDisplayed.name}/>
+                <CardImg top src={baseUrl + dishToBeDisplayed.image} alt={dishToBeDisplayed.name}/>
                 <CardBody>
                     <CardTitle>{dishToBeDisplayed.name}</CardTitle>
                     <CardText>{dishToBeDisplayed.description}</CardText>

@@ -3,6 +3,8 @@ import {Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle} from 'reac
 import { Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
+
     /*Turning Presentational Component into Functional Component*/
     function RenderMenuItem({dish, onClick}) /* 'props' can also be passed as arg but we are being specific here with {dish, onClick}*/
     {
@@ -10,7 +12,7 @@ import { Loading } from './LoadingComponent';
             /*view for each of the items*/
             <Card> {/*onClick={() => onClick(dish.id)}> Disabled*/}
                 <Link to={`/menu/${dish.id}`} > {/* Remember to use BACKQUOTES so that content inside is evaluated and then placed in URL*/}
-                <CardImg width="100%" src={dish.image} alt={dish.name} />
+                <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
                 <CardImgOverlay> 
                     <CardTitle>{dish.name}</CardTitle>
                 </CardImgOverlay>

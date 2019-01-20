@@ -1,5 +1,6 @@
 import { LEADERS } from '../shared/leaders';
 
+/* Reducer Func for Leaders */
 export const Leaders = (state=LEADERS, action)=>{
     switch(action.type)
     {

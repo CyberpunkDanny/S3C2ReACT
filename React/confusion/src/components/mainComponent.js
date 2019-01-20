@@ -8,7 +8,7 @@ import Header from './headerComponent';
 import Footer from './footerComponent';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addComment, fetchDishes } from '../redux/ActionCreators'; /* ActionCreator function is needed to obtain an action JS object which we then can dispatch to the store calling storeDispatch() */
+import { addComment, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators'; /* ActionCreator function is needed to obtain an action JS object which we then can dispatch to the store calling storeDispatch() */
 import { actions } from 'react-redux-form';
 
 /* Maps Redux store into props to make available to component */    
@@ -25,10 +25,11 @@ const mapStateToProps = state=>{
 /* If something needs to be dispatched, it should be mapped to dispatch() which is a store function */
 const mapDispatchToProps = (dispatch)=>({
     /* Dispatching action */
-    addComment: (dishId, rating, author, comment)=>dispatch(addComment(dishId, rating, author, comment)), 
+    addComment: (dishId, rating, author, comment)=>{dispatch(addComment(dishId, rating, author, comment))}, 
     fetchDishes: ()=>{dispatch(fetchDishes())},
-    resetFeedbackForm: ()=>{dispatch(actions.reset('feedback'))} /* To Reset the form once it is submitted */
-    
+    resetFeedbackForm: ()=>{dispatch(actions.reset('feedback'))}, /* To Reset the form once it is submitted */
+    fetchComments: ()=>{dispatch(fetchComments())},
+    fetchPromos: ()=>{dispatch(fetchPromos())}
 });
 
 class Main extends Component {
@@ -40,22 +41,22 @@ class Main extends Component {
     {
         console.log("Main Component componentDidMount is invoked");
         this.props.fetchDishes();
+        this.props.fetchComments();
+        this.props.fetchPromos();
     }
     
     render() { 
         const HomePage = ()=>{
             return(
                 <Home dish={this.props.dishes.dishes.filter((dish)=>dish.featured === true)[0]} dishesLoading={this.props.dishes.isLoading} dishesErrMess={this.props.dishes.errMess} 
-                    promotion={this.props.promotions.filter((promo)=>promo.featured === true)[0] } 
+                    promotion={this.props.promotions.promotions.filter((promo)=>promo.featured === true)[0]} promoLoading={this.props.promotions.isLoading} promoErrMess={this.props.promotions.errMess} 
                     leader={this.props.leaders.filter((leader)=>leader.featured === true)[0] } />
             );
         }
     
         const DishWithId = ({match})=>{
             return(
-                <DishDetail dish ={this.props.dishes.dishes.filter((dish)=> dish.id === parseInt(match.params.dishId, 10))[0]} 
-                    comments = {this.props.comments.filter((comment)=> comment.dishId === parseInt(match.params.dishId, 10))}
-                    addComment = {this.props.addComment} isLoading={this.props.dishes.isLoading} errMess={this.props.dishes.errMess}/>
+                <DishDetail dish ={this.props.dishes.dishes.filter((dish)=> dish.id === parseInt(match.params.dishId, 10))[0]} isLoading={this.props.dishes.isLoading} errMess={this.props.dishes.errMess} comments = {this.props.comments.comments.filter((comment)=> comment.dishId === parseInt(match.params.dishId, 10))} commentsErrMess={this.props.comments.errMess} addComment = {this.props.addComment}/>
                 /* parseInt() is a JS function which converts string to a number using the BASE mentioned */
             );
         }

@@ -1,6 +1,6 @@
 import * as ActionTypes from './ActionTypes';
-import { DISHES } from '../shared/dishes'; //Action Creator will provide info to dishes reducer
-
+import { baseUrl } from '../shared/baseUrl';
+import { DISHES } from '../shared/dishes';
 
 /* Action Creator: Function that creates an action object */
 export const addComment = (dishId, rating, author, comment)=>({
@@ -19,10 +19,11 @@ export const addComment = (dishId, rating, author, comment)=>({
 /* Defining Thunk. (dispatch) is an inner function */
 export const fetchDishes = ()=> (dispatch)=>{
     dispatch(dishesLoading(true));
-    /* Short Delay*/
-    setTimeout(()=>{
-        dispatch(addDishes(DISHES))
-    }, 2000);
+    
+    return fetch(baseUrl+'dishes')
+            .then(response => response.json())
+            .then(dishes => dispatch(addDishes(dishes)));
+    /* fetchDishes() is now set up to go and fetch the dishes and then, once the dishes are obtained, it'll push the dishes into the Redux Store by dispatching addDishes() */
 }
 
 
@@ -38,4 +39,44 @@ export const dishesFailed = (errmess)=>({
 export const addDishes = (dishes) => ({
     type: ActionTypes.ADD_DISHES,
     payload: dishes
+}); 
+
+export const fetchComments = ()=> (dispatch)=>{
+    
+    return fetch(baseUrl+'comments')
+            .then(response => response.json())
+            .then(comments => dispatch(addComments(comments)));
+}
+
+export const commentsFailed = (errmess)=>({
+    type: ActionTypes.COMMENTS_FAILED,
+    payload: errmess
+});
+
+export const addComments = (comments) => ({
+    type: ActionTypes.ADD_COMMENTS,
+    payload: comments
+});
+
+export const fetchPromos = ()=> (dispatch)=>{
+    dispatch(promosLoading(true));
+    
+    return fetch(baseUrl+'promotions')
+            .then(response => response.json())
+            .then(promos => dispatch(addPromos(promos)));
+}
+
+
+export const promosLoading = ()=>({
+    type: ActionTypes.PROMOS_LOADING
+});
+
+export const promosFailed = (errmess)=>({
+    type: ActionTypes.PROMOS_FAILED,
+    payload: errmess
+});
+
+export const addPromos = (promos) => ({
+    type: ActionTypes.ADD_PROMOS,
+    payload: promos
 });
