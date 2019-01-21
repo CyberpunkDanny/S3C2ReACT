@@ -1,9 +1,8 @@
 import * as ActionTypes from './ActionTypes';
-import { PROMOTIONS } from '../shared/promotions';
 
 /* Reducer Func for Promotions */
 export const Promotions = (state={
-        isLoading: false,
+        isLoading: true,
         errMess: null,
         promotions: []
     }, action)=>{

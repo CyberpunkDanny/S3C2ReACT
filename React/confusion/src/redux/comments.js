@@ -1,5 +1,4 @@
 import * as ActionTypes from './ActionTypes';
-import { COMMENTS } from '../shared/comments';
 
 /* Reducer Func for Comments */
 export const Comments = (state={
