@@ -201,6 +201,22 @@
       "comment": "It's your birthday, we're gonna party!",
       "author": "25 Cent",
       "date": "2011-12-02T17:57:28.556094Z"
+    },
+    {
+      "dishId": 1,
+      "rating": "5",
+      "author": "Teja",
+      "comment": "One of the best ever pakodas I ever had!",
+      "date": "2019-01-22T12:11:29.657Z",
+      "id": 20
+    },
+    {
+      "dishId": 0,
+      "rating": "4",
+      "author": "Divyateja",
+      "comment": "Better than the branded pizzas but the crust could be more tougher.",
+      "date": "2019-01-22T12:13:02.882Z",
+      "id": 21
     }
   ],
   "promotions": [

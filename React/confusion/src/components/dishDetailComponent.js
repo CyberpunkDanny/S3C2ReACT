@@ -35,8 +35,8 @@ class CommentForm extends Component
     handleSubmitComment(values)
     {
         this.toggleCommentModal();
-        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
-        alert("Your Comment: "+ JSON.stringify(values));
+        this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
+        //alert("Your Comment: "+ JSON.stringify(values));
     }
 
     render(){
@@ -97,7 +97,7 @@ class CommentForm extends Component
 }
 
 /*Always use UPPER_CASE for the first letter of the user-defined Component*/
-function RenderComments({commentArr, addComment, dishId})
+function RenderComments({commentArr, postComment, dishId})
 {
     const comments = commentArr.map((comment)=>{
         const positionOfT = (comment.date).indexOf("T");
@@ -117,7 +117,7 @@ function RenderComments({commentArr, addComment, dishId})
             <ul className="list-unstyled">
                 {comments}
             </ul>
-            <CommentForm dishId={dishId} addComment={addComment}/>
+            <CommentForm dishId={dishId} postComment={postComment}/>
         </div>
     );
 }
@@ -140,7 +140,7 @@ function RenderDish({dishToBeDisplayed})
 const DishDetail = (props)=>{
     const dishToBeDisplayed = props.dish;
     const commentsToBeDisplayed = props.comments;
-    const commentToBeAdded = props.addComment;
+    const commentToBeAdded = props.postComment;
 	if(props.isLoading){
         return(
             <div className="container">
@@ -176,7 +176,7 @@ const DishDetail = (props)=>{
                     </div>
                     <div className="row"> 
                         <RenderDish dishToBeDisplayed ={dishToBeDisplayed}/>
-                        <RenderComments commentArr={commentsToBeDisplayed} addComment={commentToBeAdded} dishId={dishToBeDisplayed.id}/>
+                        <RenderComments commentArr={commentsToBeDisplayed} postComment={commentToBeAdded} dishId={dishToBeDisplayed.id}/>
                         {/* dishId is being sent because the comments themselves do not know the ID of dish for which comments are being rendered*/}
                     </div>
                 </div>

@@ -2,16 +2,53 @@ import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl';
 
 /* Action Creator: Function that creates an action object */
-export const addComment = (dishId, rating, author, comment)=>({
+export const addComment = (comment)=>({
     /* Action Types are captured in ActionTypes.js and are imported here in ActionCreators.js and then are imported into Reducer Function files */
     type: ActionTypes.ADD_COMMENT, 
-    payload: {
+    payload: comment
+});
+
+/* Post Comment Thunk */
+export const postComment = (dishId, rating, author, comment) => (dispatch) => {
+    
+    const newComment = {
         dishId: dishId,
         rating: rating,
         author: author,
         comment: comment
-    }/* contains data that is to be sent by the addComment */
-});
+    }
+    
+    newComment.date = new Date().toISOString(); /* comment ID is automatically created by the server */
+    
+    return fetch(baseUrl+'comments', {
+            method: 'POST',
+            body: JSON.stringify(newComment),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response =>{
+            if(response.ok){
+                return response;
+            }
+            else{
+                var error = new Error('Error '+ response.status+ ': '+ response.statusText);
+                error.response = response;
+                throw error;
+            } 
+        },
+        error => {
+            var errmess = new Error(error.message); /* error.message contains error info */
+            throw errmess;
+        }) 
+        .then(response => response.json())
+        .then(response => dispatch(addComment(response)))
+        .catch(error => {
+            console.log('POST Comments ', error.message);
+            alert("Your comment could not be posted\n Error: "+error.message);
+        });
+}
 
 /* Other Action Creators. First One returns a function that is going to call or dispatch several actions. And the rest THREE return an action object */
 
