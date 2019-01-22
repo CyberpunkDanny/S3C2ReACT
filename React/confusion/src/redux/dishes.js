@@ -2,7 +2,7 @@ import * as ActionTypes from './ActionTypes';
 
 /* Reducer Func for Dishes */
 export const Dishes = (state={
-        isLoading: true,
+        isLoading: true, /* TRUE because initially dishes is NULL which means we need to load DISHES from somewhere else before Dish Details appear in the state */
         errMess: null,
         dishes: []
     }, action)=>{
