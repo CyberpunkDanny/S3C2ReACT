@@ -10,6 +10,7 @@ import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { postComment, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators'; /* ActionCreator function is needed to obtain an action JS object which we then can dispatch to the store calling storeDispatch() */
 import { actions } from 'react-redux-form';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 /* Maps Redux store into props to make available to component */    
 const mapStateToProps = state=>{
@@ -61,23 +62,28 @@ class Main extends Component {
             );
         }
         
+        /* Wherever animation needs to be applied, surround it with <TransitionGroup> */
+        /* Recall that every Route component receives 3 props - match, location and history. "classNames" is the CSSTransition's way of specifying things */
         return (
             <div>
                 <Header />
-                
-                <Switch>
-                    {/* If a component is of type which doesn't require any addtnl. attributes or props to be passed to it, then name of component alone is enough e.g: {Home} */}
-                    <Route path='/home' component={HomePage} />
-                    {/* But here we send HOME as a functional component casually */}
-                    {/*To pass in props to a comp through specification of the router, it has to be passed as a function component */}
-                    <Route exact path='/menu' component={()=><Menu dishes={this.props.dishes}  />} />
-                    {/* Use of 'exact' is required above to prevent falling through to next one and getting matched */}
-                    <Route path='/menu/:dishId' component={DishWithId} /> {/* Route here will pass 3 props - Match, Location and History */}
-                    <Route path='/aboutus' component={()=><About leaders={this.props.leaders}/>} />
-                    <Route exact path='/contactus' component={()=><Contact resetFeedbackForm={this.props.resetFeedbackForm}/>} />
-                    {/* Anything that doesn't match above two routes will be re-directed to Home */}
-                    <Redirect to='/home' />
-                </Switch>
+                <TransitionGroup> 
+                <CSSTransition key={this.props.location.key} classNames="page" timeout={300}> 
+                    <Switch>
+                        {/* If a component is of type which doesn't require any addtnl. attributes or props to be passed to it, then name of component alone is enough e.g: {Home} */}
+                        <Route path='/home' component={HomePage} />
+                        {/* But here we send HOME as a functional component casually */}
+                        {/*To pass in props to a comp through specification of the router, it has to be passed as a function component */}
+                        <Route exact path='/menu' component={()=><Menu dishes={this.props.dishes}  />} />
+                        {/* Use of 'exact' is required above to prevent falling through to next one and getting matched */}
+                        <Route path='/menu/:dishId' component={DishWithId} /> {/* Route here will pass 3 props - Match, Location and History */}
+                        <Route path='/aboutus' component={()=><About leaders={this.props.leaders}/>} />
+                        <Route exact path='/contactus' component={()=><Contact resetFeedbackForm={this.props.resetFeedbackForm}/>} />
+                        {/* Anything that doesn't match above two routes will be re-directed to Home */}
+                        <Redirect to='/home' />
+                    </Switch>
+                </CSSTransition>    
+                </TransitionGroup>
                 
                 <Footer />
             </div>
