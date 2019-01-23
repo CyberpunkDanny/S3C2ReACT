@@ -6,6 +6,7 @@ import { Label, Col, Row, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import { LocalForm, Control, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 const required = (value)=> value && value.length;
 const minNameLength = (len)=> (value)=> (value) && (value.length>=len);
@@ -103,11 +104,13 @@ function RenderComments({commentArr, postComment, dishId})
         const positionOfT = (comment.date).indexOf("T");
         const dateOfComment = (comment.date).slice(0, positionOfT);
         return(
-            <li key={comment.id}>
-                <p>{comment.comment}</p>
-                {/*<p>--<em>{comment.author}, {dateOfComment}</em></p>*/}
-                <p>--<em>{comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</em></p>
-            </li>
+            <Fade in>
+                <li key={comment.id}>
+                    <p>{comment.comment}</p>
+                    {/*<p>--<em>{comment.author}, {dateOfComment}</em></p>*/}
+                    <p>--<em>{comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</em></p>
+                </li>
+            </Fade>    
         )
     });
     console.log(comments);
@@ -115,7 +118,9 @@ function RenderComments({commentArr, postComment, dishId})
          <div className="col-12 col-md-5 m-1">
             <h4><strong>Comments</strong></h4>
             <ul className="list-unstyled">
-                {comments}
+                <Stagger in>
+                    {comments}
+                </Stagger>
             </ul>
             <CommentForm dishId={dishId} postComment={postComment}/>
         </div>
@@ -126,13 +131,17 @@ function RenderDish({dishToBeDisplayed})
 {
     return(
             <div className="col-12 col-md-5 m-1">
-            <Card>
-                <CardImg top src={baseUrl + dishToBeDisplayed.image} alt={dishToBeDisplayed.name}/>
-                <CardBody>
-                    <CardTitle>{dishToBeDisplayed.name}</CardTitle>
-                    <CardText>{dishToBeDisplayed.description}</CardText>
-                </CardBody>
-            </Card>
+            <FadeTransform in transformProps={{
+                    exitTransform: 'scale(0.5) translateY(-50%)'
+                }}>
+                <Card>
+                    <CardImg top src={baseUrl + dishToBeDisplayed.image} alt={dishToBeDisplayed.name}/>
+                    <CardBody>
+                        <CardTitle>{dishToBeDisplayed.name}</CardTitle>
+                        <CardText>{dishToBeDisplayed.description}</CardText>
+                    </CardBody>
+                </Card>
+            </FadeTransform>    
             </div>
     );
 }
