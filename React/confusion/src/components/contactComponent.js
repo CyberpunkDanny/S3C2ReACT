@@ -5,6 +5,7 @@ import { Label, Row, Col, Button } from 'reactstrap';
 import { FormFeedback } from 'reactstrap';
 import { Control, Form, Errors, actions } from 'react-redux-form';
 
+
 /* Validation Functions */
 const required = (val)=>val && val.length;
 const maxLength = (len)=>(val)=> !(val) || (val.length<=len); /* Function of functions */
@@ -24,7 +25,8 @@ class Contact extends Component
     handleSubmit(values)
     {
         console.log("Current State is:" + JSON.stringify(values));
-        alert("Current State is:" + JSON.stringify(values));
+        //alert("Current State is:" + JSON.stringify(values));
+        this.props.postFeedback(values);
         this.props.resetFeedbackForm();
     }
         

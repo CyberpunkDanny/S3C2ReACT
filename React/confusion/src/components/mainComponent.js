@@ -8,7 +8,7 @@ import Header from './headerComponent';
 import Footer from './footerComponent';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { postComment, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators'; /* ActionCreator function is needed to obtain an action JS object which we then can dispatch to the store calling storeDispatch() */
+import { postComment, fetchDishes, fetchComments, fetchPromos, fetchLeaders, postFeedback } from '../redux/ActionCreators'; /* ActionCreator function is needed to obtain an action JS object which we then can dispatch to the store calling storeDispatch() */
 import { actions } from 'react-redux-form';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
@@ -30,7 +30,9 @@ const mapDispatchToProps = (dispatch)=>({
     fetchDishes: ()=>{dispatch(fetchDishes())},
     resetFeedbackForm: ()=>{dispatch(actions.reset('feedback'))}, /* To Reset the form once it is submitted */
     fetchComments: ()=>{dispatch(fetchComments())},
-    fetchPromos: ()=>{dispatch(fetchPromos())}
+    fetchPromos: ()=>{dispatch(fetchPromos())},
+    fetchLeaders: ()=>{dispatch(fetchLeaders())},
+    postFeedback: (values) => {dispatch(postFeedback(values))}
 });
 
 class Main extends Component {
@@ -44,6 +46,7 @@ class Main extends Component {
         this.props.fetchDishes();
         this.props.fetchComments();
         this.props.fetchPromos();
+        this.props.fetchLeaders();
     }
     
     render() { 
@@ -51,7 +54,7 @@ class Main extends Component {
             return(
                 <Home dish={this.props.dishes.dishes.filter((dish)=>dish.featured === true)[0]} dishesLoading={this.props.dishes.isLoading} dishesErrMess={this.props.dishes.errMess} 
                     promotion={this.props.promotions.promotions.filter((promo)=>promo.featured === true)[0]} promoLoading={this.props.promotions.isLoading} promoErrMess={this.props.promotions.errMess} 
-                    leader={this.props.leaders.filter((leader)=>leader.featured === true)[0] } />
+                    leader={this.props.leaders.leaders.filter((leader)=>leader.featured === true)[0] } leaderLoading={this.props.leaders.isLoading} leaderErrMess={this.props.leaders.errMess} />
             );
         }
     
@@ -61,6 +64,19 @@ class Main extends Component {
                 /* parseInt() is a JS function which converts string to a number using the BASE mentioned */
             );
         }
+        
+        const AboutUs =()=>{
+            return(
+                <About leaders={this.props.leaders} leadersLoading={this.props.leaders.isLoading} leaderErrMess={this.props.leaders.errMess} />
+            );
+        }
+        
+        const ContactUs = ()=>{
+            return(
+                <Contact resetFeedbackForm={this.props.resetFeedbackForm} postFeedback={this.props.postFeedback} />
+            );    
+        }
+        
         
         /* Wherever animation needs to be applied, surround it with <TransitionGroup> */
         /* Recall that every Route component receives 3 props - match, location and history. "classNames" is the CSSTransition's way of specifying things */
@@ -77,8 +93,8 @@ class Main extends Component {
                         <Route exact path='/menu' component={()=><Menu dishes={this.props.dishes}  />} />
                         {/* Use of 'exact' is required above to prevent falling through to next one and getting matched */}
                         <Route path='/menu/:dishId' component={DishWithId} /> {/* Route here will pass 3 props - Match, Location and History */}
-                        <Route path='/aboutus' component={()=><About leaders={this.props.leaders}/>} />
-                        <Route exact path='/contactus' component={()=><Contact resetFeedbackForm={this.props.resetFeedbackForm}/>} />
+                        <Route path='/aboutus' component={AboutUs} />
+                        <Route exact path='/contactus' component={ContactUs} />
                         {/* Anything that doesn't match above two routes will be re-directed to Home */}
                         <Redirect to='/home' />
                     </Switch>
